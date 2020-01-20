@@ -1,4 +1,4 @@
-This file is used to guide AB testing on binomial distribution with two groups: control and experiment.
+This file is used to guide AB testing on binomial distribution with two groups: control and experiment. It is summarized from the first week [Udacity AB testing course] (https://www.udacity.com/course/ab-testing--ud257). I will then make functions for each step and a final function to call all the functions and generate analysis directly.
 
 
 Terminologies:
