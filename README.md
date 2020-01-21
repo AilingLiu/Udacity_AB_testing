@@ -46,17 +46,11 @@ $\hat{p}_{pool} = \dfrac{x_{cont}+x_{exp}}{N_{cont}+N_{exp}}$
 
 $\sqrt{\hat{p}_{pool}(1-\hat{p}_{pool})\times(\dfrac{1}{N_{cont}}+\dfrac{1}{N_{exp}})}$
 
-7. Calculate $m=Z*SE_{pool}$
+7. Calculate margin of error:
 
-*****Evaluate statistical significance******
+$m=Z*SE_{pool}$
 
-if $m < \alpha_{0.05}$, reject $H_{0}$;
-
-Else, fail to reject $H_{0}$
-
-*****Evaluate Practical significance*****
-
-8. Calculate confidence interval for $\hat{d}$
+8. Calculate confidence interval for $CI$
 
 [$\hat{d}-m$, $\hat{d}+m$]
 
@@ -64,4 +58,5 @@ Differences between control and experiment group lower bound: $\hat{d}-m$
 
 Differences between control and experiment group upper bound: $\hat{d}+m$
 
-if lower bound value is smaller than the practical significance $\beta$, we will not proceed new change that has been adapted on experiment group to system simply because it fail our expectation to be worthy.
+***Conclusion***
+The change is statistically significant if the CI doesn't include 0. In that case, it is practically significant if lower bound value is smaller than the practical significance $\beta$ as well.
