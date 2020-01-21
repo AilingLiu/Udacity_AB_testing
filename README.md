@@ -1,4 +1,4 @@
-This file is used to guide AB testing on binomial distribution with two groups: control and experiment. It is summarized from the first week [Udacity AB testing course] (https://www.udacity.com/course/ab-testing--ud257). I will then make functions for each step and a final function to call all the functions and generate analysis directly.
+This file is used to guide AB testing on binomial distribution with two groups. It is based on the first week Udacity AB testing course (https://www.udacity.com/course/ab-testing--ud257). Each step has been made in function and the final result can be called directly by `compare_two_group_proportion`. The toy data is used to test the function usability.
 
 
 Terminologies:
