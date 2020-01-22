@@ -5,6 +5,7 @@ url = 'https://raw.githubusercontent.com/AilingLiu/Udacity_AB_testing/master/dat
 
 df = pd.read_csv(url, index_col='uuid', usecols=['uuid', 'multiple_session_conducted', 'test_group'])
 print(df.head(10))
+
 """
 Toy data:
          multiple_session_conducted test_group
@@ -40,9 +41,9 @@ def get_ab_proportion(x_cont, x_exp, N_cont, N_exp):
   con_prop = round(x_cont/N_cont, 3)
   exp_prop = round(x_exp/N_exp, 3)
   print('Estimated proportion in Experiment Group: {}\nEstimated proportion in Control Group: {}'.format(exp_prop, con_prop))
-  return exp_prop, con_prop
+  return con_prop, exp_prop
 
-def get_prop_diff(exp_prop, cont_bprop):
+def get_prop_diff(cont_bprop, exp_prop):
   estimated_diff = round(exp_prop - cont_bprop, 5)
   print('The change due to the experiment is: {}%'.format(estimated_diff*100))
   return estimated_diff
@@ -66,16 +67,18 @@ def get_confi_interval(cal_mean, margin, sig_level=0.05):
   lower_bound = round(cal_mean - margin, 3)
   upper_bound = round(cal_mean + margin, 3)
   print('True value falls into following interval at {}% confidence: [{}, {}]'.format(conf_level*100,lower_bound, upper_bound))
+  print('This means that if you run the experiment again for another 10,000 trials, \
+  you might get successful event for about {} to {} times.'.format(lower_bound*10000, upper_bound*10000))
   return lower_bound, upper_bound
 
-def evaluate_result(lower_bound, upper_bound, prac_sig=0.02):
-  if upper_bound < 0 or lower_bound > 0:
+def evaluate_result(cal_d, margin_error, prac_sig=0.02):
+  if cal_d < -margin_error or cal_d > margin_error:
     print('The change is statistically significant.')
 
-    if lower_bound > prac_sig:
+    if cal_d -margin_error >= prac_sig:
       print('The change is practically significant.')
     else:
-      print('The change is fail practical significance expectation.')
+      print('But the change fails practical significance expectation.')
   else:
     print('Fail to reject null hypothesis. The change is not statistically significant.')
 
@@ -92,27 +95,19 @@ def compare_two_group_proportion(df, group_col='test_group', event_col='event_co
   stdr = get_pooled_stderr(p, ncont, nexp)
   m = calculate_margin_error(sig_level=sig_level, stderr=stdr)
   lb, ub = get_confi_interval(d, m, sig_level=sig_level)
-  evaluate_result(lower_bound=lb, upper_bound=ub, prac_sig=prac_sig)
+  evaluate_result(cal_d=d, margin_error=m, prac_sig=prac_sig)
 
 
 compare_two_group_proportion(df, event_col='multiple_session_conducted')
 
 """ You will see below result:
 
-Count Table:
-****************************************
-test_group                  control  test  Total
-multiple_session_conducted
-True                            494   369    863
-Total                          4309  3046   7355
-Result:
-****************************************
 Estimated proportion in Experiment Group: 0.121
 Estimated proportion in Control Group: 0.115
 The change due to the experiment is: 0.6%
 Pooled Standard Error(Uncertainty): 0.00762
 Calculated Margin Error: 0.01493 at 0.05 significance level
 True value falls into following interval at 95.0% confidence: [-0.009, 0.021]
+This means that if you run the experiment again for another 10,000 trials,   you might get successful event for about -90.0 to 210.0 times.
 Fail to reject null hypothesis. The change is not statistically significant.
-[Finished in 6.924s]
-""""
+"""

@@ -21,7 +21,7 @@ Steps:
 $$\hat{d}=0$$
 where $\hat{d}\sim N(0, SE_{pool})$.
 
-2. Construct 2x2 table as below:
+2. Construct count table as below:
 
 |   |Control   | Experiment   |
 |---|---|---|
@@ -58,5 +58,12 @@ Differences between control and experiment group lower bound: $\hat{d}-m$
 
 Differences between control and experiment group upper bound: $\hat{d}+m$
 
-***Conclusion***
-The change is statistically significant if the CI doesn't include 0. In that case, it is practically significant if lower bound value is smaller than the practical significance $\beta$ as well.
+9. Conclusion
+
+Statistical significant:
+if $\hat{d} < -Z*SE$ or $\hat{d} > Z*SE$
+
+Practical significance:
+if $\hat{d} - m$ >= practical significance level $\beta$
+
+In such cases, the change is statistically and practically significant.
